@@ -21,7 +21,7 @@
 * kibana获取到ela中的日志，可以通过kibana的UI界面检索日志。
 
 本工程实现的是上述步骤的流程1，实现了应用端快速接入方案，只需要进行简单的配置，即可实现将运行中的产生的日志输送到kafka.
-
+其他流程相关软件已经实现。
 # 接入说明
 
 ## 引入依赖
@@ -44,10 +44,15 @@ import java.util.Map;
 public class DemoKafkaConfig extends KafkaConfig {
 
     //kafka参数配置，比如连接地址，超时时间等，参考org.apache.kafka.clients.producer.ProducerConfig类
+    //默认的参数请查看KafkaConfig.defaultConfig()
     @Override
     public Map<String, Object> config() {
-        return null;
-    }
+            Map<String, Object> kafkaCfg = new HashMap<>();
+    
+            kafkaCfg.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092,localhost:9093");
+    
+            return kafkaCfg;
+        }
 
     //应用的名称
     @Override
